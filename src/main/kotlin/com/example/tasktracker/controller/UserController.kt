@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(
     val userService: UserService
 ) {
+
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Long) : User {
         return userService.findById(id)
