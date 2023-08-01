@@ -6,6 +6,7 @@ import com.example.tasktracker.service.TaskService
 import com.example.tasktracker.service.mapper.impl.TaskMapper
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -34,8 +35,20 @@ class TaskController(
         return taskMapper.mapToDto(taskService.findById(id))
     }
 
+    @PatchMapping("/{id}")
+    fun update(@PathVariable id: Long,
+               @RequestBody requestDto: TaskRequestDto) : TaskResponseDto {
+        return taskMapper.mapToDto(taskService
+            .update(id, taskMapper.mapToModel(requestDto)))
+    }
+
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable id: Long) {
         taskService.deleteById(id)
+    }
+
+    @PatchMapping("/{id}")
+    fun changeTaskStatusById(@PathVariable id: Long) : TaskResponseDto {
+        return taskMapper.mapToDto(taskService.changeTaskStatus(id))
     }
 }

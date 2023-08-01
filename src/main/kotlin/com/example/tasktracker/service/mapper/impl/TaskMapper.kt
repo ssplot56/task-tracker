@@ -7,6 +7,7 @@ import com.example.tasktracker.service.UserService
 import com.example.tasktracker.service.mapper.RequestDtoMapper
 import com.example.tasktracker.service.mapper.ResponseDtoMapper
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class TaskMapper(
@@ -14,10 +15,20 @@ class TaskMapper(
 ) : RequestDtoMapper<TaskRequestDto, Task>,
     ResponseDtoMapper<TaskResponseDto, Task> {
     override fun mapToModel(dto: TaskRequestDto): Task {
-        return Task(null, dto.content, user = userService.findById(dto.userId))
+        return Task(
+            null,
+            dto.content,
+            LocalDateTime.now(),
+            false,
+            userService.findById(dto.userId))
     }
 
     override fun mapToDto(entity: Task): TaskResponseDto {
-        return TaskResponseDto(entity.id!!, entity.content, entity.user.id!!)
+        return TaskResponseDto(
+            entity.id!!,
+            entity.content,
+            entity.updateDate,
+            entity.isFinished,
+            entity.user.id!!)
     }
 }

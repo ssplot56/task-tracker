@@ -5,9 +5,13 @@ import com.example.tasktracker.model.Task
 interface TaskService {
     fun save(task: Task): Task
 
+    fun update(id: Long, task: Task): Task
+
     fun findById(id: Long): Task
 
     fun findAll(): List<Task>
 
     fun deleteById(id: Long)
+
+    fun changeTaskStatus(id: Long): Task
 }

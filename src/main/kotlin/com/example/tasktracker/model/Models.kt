@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "tasks")
@@ -13,7 +14,9 @@ data class Task(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-    val content: String,
+    var content: String,
+    var updateDate: LocalDateTime,
+    var isFinished: Boolean,
     @ManyToOne
     val user: User
 )
@@ -25,5 +28,5 @@ data class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     val name: String,
-    val password: String
+    val password: String,
 )
